@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>PyLO</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+      .container {
+        background-color: white;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        max-width: 70%;
+      }
+
+      body {
+        background: rgb(32,64,81);
+        background: linear-gradient(90deg, rgba(32,64,81,1) 0%, rgba(59,105,120,1) 55%, rgba(132,169,172,1) 81%, rgba(202,232,213,1) 100%);
+      }
+
+    </style>
+
+</head>
+<body>
+
+  <div class="container" style="max-width:70%">
+    <img src="{{ url_for('static', filename='pyloLogo.jpg')}}" alt="avatar" style="max-height:100%; max-width:100%">
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-secondary float-left" data-toggle="modal" data-target="#BindModal">Bind ID</button>
+      </div>
+      <div class="col">
+        <h1 align="center" style="font-family: 'Monaco';font-weight: bold;">Attendance</h1>
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-secondary float-right" data-toggle="modal" data-target="#RegisterModal">Register</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form method="POST">
+        <input type="hidden" name="mode" value="query"/>
+        <input type="text" name="text" class="form-control" id="info" required>
+        <div class="row">
+          <div class="col-sm-1">        
+            <input type="submit" value="Submit">
+          </div>
+          <div class="col-sm-6">
+            <small class="form-text text-muted">Input your student email or swipe your card</small>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    {% for request in content %}
+      <h5 style="margin: 8px">{{ request }}</h5>
+    {% endfor %}
+
+  </div>
+
+<div class="modal fade" id="BindModal">
+  <div class="modal-dialog">
+    <form method="POST">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Bind Your Student ID Card for Login</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+          <h5 style="margin-bottom: 10px">NOTE: Binding does not automatically record your attendance!</h5>
+          <input type="hidden" name="mode" value="bind"/>
+
+          <div class="form-group">
+            <label for="email">Student Email</label>
+            <input name="email" class="form-control" id="email" placeholder="Enter email" style="margin-bottom: 10px" required>
+            <label for="card">Swipe your card here</label>
+            <input type="password" name="card" class="form-control" id="card" placeholder="Password" required>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="RegisterModal">
+  <div class="modal-dialog">
+    <form method="POST">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Register as a PyLO Member</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="mode" value="register"/>
+        <h5 style="margin-bottom: 10px">NOTE: Registering does not automatically record your attendance!</h5>
+
+        <div class="form-group">
+          <label for="email">Student Email</label>
+          <input name="email" class="form-control" id="email" placeholder="Enter email" style="margin-bottom: 10px" required>
+          <label for="firstName">First Name</label>
+          <input name="firstName" class="form-control" id="firstName" placeholder="Enter first name" style="margin-bottom: 10px" required>
+          <label for="lastName">Last Name</label>
+          <input name="lastName" class="form-control" id="lastName" placeholder="Enter last name" style="margin-bottom: 10px" required>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" name="needsCredit" class="form-check-input" id="needsCredit" value='Yes'>
+          <label class="form-check-label" name="needsCredit" for="needsCredit">In CMPSC132?</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
